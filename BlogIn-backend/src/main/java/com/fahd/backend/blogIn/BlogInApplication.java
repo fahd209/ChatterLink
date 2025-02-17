@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.fahd.backend.blogin")
+@ComponentScan(basePackages = {"com.fahd.backend.blogin"})
 public class BlogInApplication {
 
 	public static void main(String[] args) {
