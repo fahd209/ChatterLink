@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shadowPulse {
+    0% { box-shadow: 0 0 15px #A060FF; }
+    50% { box-shadow: 0 0 20px #00E4E3; }
+    100% { box-shadow: 0 0 15px #A060FF; }
+}
+
+.container {
+    background-color: #05001e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signIn-container {
+    padding: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #A060FF;
+    animation: shadowPulse 2s infinite alternate ease-in-out;
+    background-color: #05001e;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+}
+
+.signIn-container h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Roboto", serif;
+    background: linear-gradient(90deg, #A060FF, #00E4E3);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s infinite linear;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 350px;
+}
+
+.name-container{
+    display: flex;
+    padding: 10;
+}
