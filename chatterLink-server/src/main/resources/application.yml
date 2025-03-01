@@ -1,0 +1,13 @@
+spring.application.name: blogIn
+
+spring:
+  data:
+    mongodb:
+      host: chatter-link-mongo
+      port: 27017
+      database: chatterlink
+
+logging.level.org.springframework.security: DEBUG
+logging.level.org.springframework.web: DEBUG
+
+app.secret.key: b4cd7943d8790d41593898e389859ed88ebc915ef0c6039c93b0a5740ce81ded

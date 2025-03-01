@@ -116,7 +116,7 @@ function SignupPage() {
                 </TabList>
               </Box>
           </TabContext>
-          {/* if the tab value is 1 mount he Signup in component else mount the SignIn component */}
+          {/* if the tab value is 1 mount the Signup in component else mount the SignIn component */}
             {
               tabValue === "1" ? <SignUpComponent
                 firstName={signUpData.firstName}
