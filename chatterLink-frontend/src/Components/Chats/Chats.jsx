@@ -1,4 +1,3 @@
-import { error } from 'ajv/dist/vocabularies/applicator/dependencies'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 

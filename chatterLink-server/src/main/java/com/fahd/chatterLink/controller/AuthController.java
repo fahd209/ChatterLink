@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.fahd.chatterLink.ChatterLinkServerConstants.*;
+
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(AUTH_API)
 @CrossOrigin
 public class AuthController {
 
@@ -20,12 +22,12 @@ public class AuthController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping(LOGIN_API)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
         return ResponseEntity.ok(authenticationService.authenticate(authRequest));
     }
 
-    @PostMapping("/signup")
+    @PostMapping(SIGN_UP_API)
     public ResponseEntity<AuthResponse> signIn(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.registerUser(request));
     }
