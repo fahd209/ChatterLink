@@ -43,8 +43,8 @@ jobs:
 
           docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
 
-          docker build chatterLink-backend/. -t FRONTEND_IMAGE
-          docker build chatterLink-frontend/. -t BACKEND_IMAGE
+          docker build chatterLink-backend/. -t $FRONTEND_IMAGE
+          docker build chatterLink-frontend/. -t $BACKEND_IMAGE
 
           IFS=',' read -ra TAGS <<< "$DOCKER_IMAGE_TAGS"
           for TAG in "${TAGS[@]}"; do
