@@ -26,7 +26,7 @@ public class SecurityConfig {
         //httpSecurity.addFilterAt(securityContextFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/demo/test").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
