@@ -41,7 +41,7 @@ jobs:
           DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}
 
-          docker login --username $DOCKER_USERNAME --password DOCKER_PASSWORD
+          docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
 
           docker build chatterLink-backend/. -t FRONTEND_IMAGE
           docker build chatterLink-frontend/. -t BACKEND_IMAGE
