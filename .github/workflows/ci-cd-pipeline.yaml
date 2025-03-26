@@ -43,8 +43,8 @@ jobs:
 
           docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
 
-          docker build chatterLink-server/. -t $FRONTEND_IMAGE
-          docker build chatterLink-frontend/. -t $BACKEND_IMAGE
+          docker build chatterLink-server/. -t $BACKEND_IMAGE
+          docker build chatterLink-frontend/. -t $FRONTEND_IMAGE
 
           IFS=',' read -ra TAGS <<< "$DOCKER_IMAGE_TAGS"
           for TAG in "${TAGS[@]}"; do
@@ -53,6 +53,9 @@ jobs:
             docker push $BACKEND_IMAGE:$TAG
             docker push $FRONTEND_IMAGE:$TAG
           done
+
+      #- name: changed the deployment manifest in gitlab
+
 
 
     
