@@ -66,6 +66,7 @@ jobs:
       - name: Update helm charts values 
         run: |
           cd chatter-link-manifest 
+          cd chatter-link
           sed -i 's|^\(.*tag: \).*|\1"$COMMIT_SHA"|' values.yaml
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
