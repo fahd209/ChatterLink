@@ -3,14 +3,13 @@ package com.fahd.chatterLink.service;
 import com.fahd.chatterLink.model.*;
 import com.fahd.chatterLink.repository.UserRepository;
 import com.fahd.chatterLink.security.JwtService;
-import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthenticationService {
@@ -37,10 +36,15 @@ public class AuthenticationService {
                 .role(Role.USER)
                 .build();
 
+        // if there is a user with the same email return a status code bad request
+        if (userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid credentials");
+        }
+
         userRepository.save(user);
 
         var jwt = jwtService.generateToken(user);
-        return AuthResponse.builder().accessToken(jwt).build();
+        return AuthResponse.builder().accessToken(jwt).message("User registered successfully").build();
     }
 
     public AuthResponse authenticate(AuthRequest authRequest) {
@@ -54,6 +58,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
                 .accessToken(jwtToken)
+                .message("User logged in successfully")
                 .build();
     }
 }

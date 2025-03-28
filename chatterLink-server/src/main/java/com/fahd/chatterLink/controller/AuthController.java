@@ -5,8 +5,10 @@ import com.fahd.chatterLink.model.AuthResponse;
 import com.fahd.chatterLink.model.RegisterRequest;
 import com.fahd.chatterLink.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import static com.fahd.chatterLink.ChatterLinkServerConstants.*;
 
@@ -29,7 +31,13 @@ public class AuthController {
 
     @PostMapping(SIGN_UP_API)
     public ResponseEntity<AuthResponse> signIn(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.registerUser(request));
+        try{
+            return ResponseEntity.ok(authenticationService.registerUser(request));
+        } catch (ResponseStatusException responseStatusException) {
+            return ResponseEntity.status(responseStatusException.getStatusCode()).body(new AuthResponse(null, "Invalid credentials"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null, "Something went wrong"));
+        }
     }
 
 }
