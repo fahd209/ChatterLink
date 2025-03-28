@@ -59,12 +59,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Clone manifest from gitlab
-        id: clone manifest 
         run: |
           TOKEN=${{ env.GITLAB_TOKEN }}
           git clone https://oauth2:${TOKEN}@gitlab.com/fahd209/chatter-link-manifest.git
       - name: Update helm charts values 
-        id: update helm 
         run: |
           cd chatter-link-manifest 
           sed -i 's|^\(.*tag: \).*|\1"$COMMIT_SHA"|' values.yaml
