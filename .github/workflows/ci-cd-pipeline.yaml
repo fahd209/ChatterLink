@@ -67,10 +67,11 @@ jobs:
         run: |
           cd chatter-link-manifest 
           cd chatter-link
-          sed -i 's|^\(.*tag: \).*|\1"$COMMIT_SHA"|' values.yaml
+          IMAGE_TAG=${{ needs.build-and-push.outputs.sha }}
+          sed -i 's|^\(.*tag: \).*|\1"$IMAGE_TAG"|' values.yaml
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           git add values.yaml
-          git commit -m "Updating helm image tag to $COMMIT_SHA" 
+          git commit -m "Updating helm image tag to $IMAGE_TAG" 
           git push origin main 
 
