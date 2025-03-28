@@ -68,7 +68,7 @@ jobs:
           cd chatter-link-manifest 
           cd chatter-link
           IMAGE_TAG=${{ needs.build-and-push.outputs.sha }}
-          sed -i 's|^\(.*tag: \).*|\1"$IMAGE_TAG"|' values.yaml
+          sed -i "s|^\(.*tag: \).*|\1\"$IMAGE_TAG\"|" values.yaml
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           git add values.yaml
