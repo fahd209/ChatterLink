@@ -53,9 +53,3 @@ jobs:
             docker push $BACKEND_IMAGE:$TAG
             docker push $FRONTEND_IMAGE:$TAG
           done
-
-      #- name: changed the deployment manifest in gitlab
-
-
-
-    
