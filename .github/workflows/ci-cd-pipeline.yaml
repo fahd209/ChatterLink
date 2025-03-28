@@ -8,6 +8,7 @@ on:
 env:
   FRONT_END_IMAGE: 5starrrfahd/chatter-link-frontend
   BACKED_END_IMAGE: 5starrrfahd/chatter-link-server
+  GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
 
 jobs:
   build-and-push:
@@ -53,3 +54,23 @@ jobs:
             docker push $BACKEND_IMAGE:$TAG
             docker push $FRONTEND_IMAGE:$TAG
           done
+  Update-helm-charts:
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clone manifest from gitlab
+        id: clone manifest 
+        run: |
+          TOKEN=${{ env.GITLAB_TOKEN }}
+          git clone https://oauth2:${TOKEN}@gitlab.com/fahd209/chatter-link-manifest.git
+      - name: Update helm charts values 
+        id: update helm 
+        run: |
+          cd chatter-link-manifest 
+          sed -i 's|^\(.*tag: \).*|\1"$COMMIT_SHA"|' values.yaml
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add values.yaml
+          git commit -m "Updating helm image tag to $COMMIT_SHA" 
+          git push origin main 
+
