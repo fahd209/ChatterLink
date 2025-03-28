@@ -55,6 +55,7 @@ jobs:
             docker push $FRONTEND_IMAGE:$TAG
           done
   Update-helm-charts:
+    needs: build-and-push
     runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v4
