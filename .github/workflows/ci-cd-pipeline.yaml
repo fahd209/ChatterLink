@@ -62,7 +62,7 @@ jobs:
       - name: Clone manifest from gitlab
         run: |
           TOKEN=${{ env.GITLAB_TOKEN }}
-          git clone https://oauth2:${TOKEN}@gitlab.com/fahd209/chatter-link-manifest.git
+          git clone https://oauth2:$TOKEN@gitlab.com/fahd209/chatter-link-manifest.git
       - name: Update helm charts values 
         run: |
           cd chatter-link-manifest 
