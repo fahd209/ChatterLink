@@ -1,2 +1,3 @@
-const baseUrl = "http://localhost:8080"
+
+const baseUrl = "chatterlink.server.local.com"
 export default baseUrl
