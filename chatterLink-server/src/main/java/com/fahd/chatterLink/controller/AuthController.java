@@ -26,7 +26,13 @@ public class AuthController {
 
     @PostMapping(LOGIN_API)
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok(authenticationService.authenticate(authRequest));
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(authRequest));
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null, ex.getReason()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null, "Something went wrong"));
+        }
     }
 
     @PostMapping(SIGN_UP_API)
@@ -34,7 +40,7 @@ public class AuthController {
         try{
             return ResponseEntity.ok(authenticationService.registerUser(request));
         } catch (ResponseStatusException responseStatusException) {
-            return ResponseEntity.status(responseStatusException.getStatusCode()).body(new AuthResponse(null, "Invalid credentials"));
+            return ResponseEntity.status(responseStatusException.getStatusCode()).body(new AuthResponse(null, responseStatusException.getReason()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null, "Something went wrong"));
         }
