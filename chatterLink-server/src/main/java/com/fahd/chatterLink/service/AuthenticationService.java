@@ -23,14 +23,24 @@ public class AuthenticationService {
     private final static Logger LOGGER = LoggerFactory.getLogger(AuthenticationService.class);
 
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthenticationService(final UserRepository userRepository,
+                                 final PasswordEncoder passwordEncoder,
+                                 final JwtService jwtService,
+                                 final AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthResponse registerUser(RegisterRequest request) {
+    public AuthResponse registerUser(final RegisterRequest request) {
+        boolean isAnyInputEmpty = request.getFirstName().isEmpty() || request.getLastName().isEmpty() || request.getEmail().isEmpty() || request.getPassword().isEmpty();
+
+        if (isAnyInputEmpty) {
+            LOGGER.error("Register request was empty");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All signup field can't be empty");
+        }
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -38,13 +48,6 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-
-        boolean isAnyInputEmpty = request.getFirstName().isEmpty() || request.getLastName().isEmpty() || request.getEmail().isEmpty() || request.getPassword().isEmpty();
-
-        if (isAnyInputEmpty) {
-            LOGGER.error("Register request was empty");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "All signup field can't be empty");
-        }
 
         // if there is a user with the same email return a status code bad request
         if (userRepository.findByEmail(user.getEmail()).isPresent()){
@@ -54,11 +57,17 @@ public class AuthenticationService {
         userRepository.save(user);
 
         var jwt = jwtService.generateToken(user);
-        return AuthResponse.builder().accessToken(jwt).message("User registered successfully").build();
+        User registeredUser = userRepository.findByEmail(user.getEmail()).get();
+
+        return AuthResponse.builder()
+                .userId(registeredUser.getId())
+                .email(registeredUser.getEmail())
+                .accessToken(jwt)
+                .message("User registered successfully")
+                .build();
     }
 
-    public AuthResponse authenticate(AuthRequest authRequest) {
-
+    public AuthResponse authenticate(final AuthRequest authRequest) {
         // if the request is empty don't allow the user to login
         if (authRequest.getEmail().isEmpty() || authRequest.getPassword().isEmpty()) {
             LOGGER.error("Login request was empty");
@@ -74,6 +83,8 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
         return AuthResponse.builder()
+                .userId(user.getId())
+                .email(user.getEmail())
                 .accessToken(jwtToken)
                 .message("User logged in successfully")
                 .build();

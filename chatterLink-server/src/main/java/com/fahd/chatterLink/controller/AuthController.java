@@ -25,24 +25,24 @@ public class AuthController {
     }
 
     @PostMapping(LOGIN_API)
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody final AuthRequest authRequest) {
         try {
             return ResponseEntity.ok(authenticationService.authenticate(authRequest));
         } catch (ResponseStatusException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null, ex.getReason()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null,null,null, ex.getReason()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null, "Something went wrong"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null,null,null, "Something went wrong"));
         }
     }
 
     @PostMapping(SIGN_UP_API)
-    public ResponseEntity<AuthResponse> signIn(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> signIn(@RequestBody final RegisterRequest request) {
         try{
             return ResponseEntity.ok(authenticationService.registerUser(request));
         } catch (ResponseStatusException responseStatusException) {
-            return ResponseEntity.status(responseStatusException.getStatusCode()).body(new AuthResponse(null, responseStatusException.getReason()));
+            return ResponseEntity.status(responseStatusException.getStatusCode()).body(new AuthResponse(null,null,null,responseStatusException.getReason()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null, "Something went wrong"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new AuthResponse(null,null,null, "Something went wrong"));
         }
     }
 
