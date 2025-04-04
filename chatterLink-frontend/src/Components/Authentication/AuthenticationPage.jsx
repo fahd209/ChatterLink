@@ -10,8 +10,12 @@ import SignUpComponent from './SignUpComponent';
 import SignInComponent from './SignInComponent';
 import baseUrl from '../config/baseUrl';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
-function SignupPage() {
+function AuthenticationPage() {
+  const navigate = useNavigate();
+  const { saveUser } = useAuth();
 
   // state for tab value change
   const [tabValue, setTabValue] = useState("1");
@@ -57,6 +61,16 @@ function SignupPage() {
     axios.post(url, signInPayload)
     .then((res) => {
       console.log(res.data)
+
+      const loggedInUser = {
+        username: res.data.email,
+        token: res.data.accessToken,
+        userId: res.data.userId
+      }
+
+      saveUser(loggedInUser)
+      navigate("/chats")
+
       setSignInData({
         email: '',
         password: ''
@@ -87,6 +101,15 @@ function SignupPage() {
     .then((res) => {
       console.log(res.data)
 
+      const loggedInUser = {
+        username: res.data.email,
+        token: res.data.accessToken,
+        userId: res.data.userId
+      }
+
+      saveUser(loggedInUser)
+      navigate("/chats")
+
       setSignUpData({
         firstName: '',
         lastName: '',
@@ -104,7 +127,7 @@ function SignupPage() {
   }
 
   return (
-    <div className='container'>
+    <div className='auth-page-container'>
       <div className='signIn-container'>
         <img src={logo} width='150px' />
         <h1>Welcome to Chatter Link</h1>
@@ -138,4 +161,4 @@ function SignupPage() {
   )
 }
 
-export default SignupPage
+export default AuthenticationPage

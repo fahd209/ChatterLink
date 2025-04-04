@@ -12,7 +12,7 @@
     100% { box-shadow: 0 0 15px #A060FF; }
 }
 
-.container {
+.auth-page-container {
     background-color: #05001e;
     display: flex;
     justify-content: center;

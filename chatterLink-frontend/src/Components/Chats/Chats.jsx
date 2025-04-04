@@ -1,22 +1,32 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Chat.css'
+import Button from '@mui/material/Button';
+import Contacts from './Contacts';
+import Chatbox from './Chatbox';
+import { useAuth } from '../context/AuthContext'
+import { useNavigate, userNavigate } from 'react-router-dom'
 
 const Chats = () => {
-    const [user, setUser] = useState(null)
+    const { logout } = useAuth();
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/v1/user-info', {withCredentials: true})
-        .then(result => {
-            setUser(result.data)
-            console.log(result.data)
-        })
-        .catch(error => {
-            console.log(error)
-        }, [])
-    })
+    const handleLogout = () => {
+        logout()
+        navigate("/")
+    }
+
     return (
-        <div>
-            <h1>Hello</h1>
+        <div className='chat-container'>
+            <div className='container'>
+                <div className='chat-header d-flex justify-content-left'>
+                    <Button onClick={handleLogout} variant='contained' sx={{ height: '40px' }} >Logout</Button>
+                </div>
+                <div className='chat-window'>
+                    <Contacts />
+                    <Chatbox />
+                </div>
+            </div>
         </div>
     )
 }
