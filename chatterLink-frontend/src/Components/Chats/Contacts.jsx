@@ -10,7 +10,7 @@ import ContactComp from './ContactComp';
 function Contacts() {
 
   const handleClick = () => {
-
+    console.log("Clicked")
   }
 
   const names = ["User", "User", "User", "User", "User", "User", "User", "User", "User"]
