@@ -99,8 +99,6 @@ function AuthenticationPage() {
 
     axios.post(url, signUpPayload)
     .then((res) => {
-      console.log(res.data)
-
       const loggedInUser = {
         username: res.data.email,
         token: res.data.accessToken,
