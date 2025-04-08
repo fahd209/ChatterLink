@@ -89,10 +89,6 @@ public class ContactService {
                     .username(currentUser.get().getUsername())
                     .build();
 
-//            if (targetUserContactList.get().getContactList().contains(newContact)) {
-//                throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already in your contact list");
-//            }
-
             targetUserContactList.get().getContactList().add(newContact);
 
             contactsRepository.save(targetUserContactList.get());
@@ -101,4 +97,11 @@ public class ContactService {
         return contactsRepository.findByUserId(currentUserId).get();
     }
 
+    public Object getCurrentUserContactList(String userId) {
+        Optional<ContactList> contactList = contactsRepository.findByUserId(userId);
+        if (contactList.isPresent()) {
+            return contactList;
+        }
+        return null;
+    }
 }
