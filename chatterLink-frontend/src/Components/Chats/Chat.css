@@ -33,12 +33,6 @@
     align-items: center;
 }
 
-.contact-tab {
-    display: flex;
-    border-bottom: .5px solid rgba(255, 255, 255, 0.327);
-    padding: 10px;
-    align-items: center;
-}
 
 .contact-tab:hover {
     background-color: #221d37;
@@ -62,4 +56,19 @@
 
 .not-contacts-container p {
     color: white;
+}
+
+.chat-data-container {
+    height: 90%;
+    width: 100%;
+    border: 1px solid white;
+}
+
+.send-message-container{
+    width: 100%;
+    border: 1px solid white;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

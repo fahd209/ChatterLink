@@ -11,11 +11,12 @@ import axios from 'axios';
 import baseUrl from '../config/baseUrl'
 import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
-function Contacts() {
+function Contacts({ onUserClick }) {
 
   const { currentUser } = useAuth()
   const [targetUserContact, setTargetUserContact] = useState('');
   const [contactList, setContactList] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState(null)
 
   const handleContactTextFieldChange = (e) => {
     const value = e.target.value;
@@ -65,6 +66,8 @@ function Contacts() {
   }, [])
 
   const handleContactClick = (username, index, userId) => {
+    setSelectedIndex(index)
+    onUserClick(username, userId)
   }
 
   return (
@@ -108,6 +111,7 @@ function Contacts() {
                 onContactClick={handleContactClick}
                 username={contact.username}
                 userId={contact.userId}
+                selectedIndex={selectedIndex}
               />))
 
             ) : (

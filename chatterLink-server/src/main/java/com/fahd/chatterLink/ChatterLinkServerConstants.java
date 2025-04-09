@@ -6,4 +6,5 @@ public interface ChatterLinkServerConstants {
     String SIGN_UP_API = "/signup";
     String LOGIN_API = "/authenticate";
     String CONTACT_PATH = API_SUFFIX + "/contacts";
+    String GET_CHAT_PATH = API_SUFFIX + "/chat";
 }

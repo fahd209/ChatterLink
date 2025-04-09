@@ -47,7 +47,6 @@ public class ContactService {
                     .contactList(List.of(contact))
                     .build();
             LOGGER.info("Current user contact list does not exist, creating a new one");
-
             contactsRepository.save(contactList);
         } else {
             Contact newContact = Contact
@@ -55,7 +54,6 @@ public class ContactService {
                     .username(targetUser.get().getUsername())
                     .userId(targetUser.get().getId())
                     .build();
-
             if (currentUserContactList.get().getContactList().contains(newContact)) {
                 LOGGER.error("User already exist in {}, contact list", "userId: " + currentUserId);
                 throw new  ResponseStatusException(HttpStatus.BAD_REQUEST, "User is already in your contact list");
@@ -80,7 +78,6 @@ public class ContactService {
                     .build();
 
             LOGGER.info("Target user contact list does not exist, creating a new one");
-
             contactsRepository.save(contactList);
         } else {
 
@@ -90,7 +87,6 @@ public class ContactService {
                     .build();
 
             targetUserContactList.get().getContactList().add(newContact);
-
             contactsRepository.save(targetUserContactList.get());
         }
 
