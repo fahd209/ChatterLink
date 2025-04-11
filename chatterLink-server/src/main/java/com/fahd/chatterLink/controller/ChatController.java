@@ -3,6 +3,7 @@ package com.fahd.chatterLink.controller;
 import com.fahd.chatterLink.model.chat.ChatList;
 import com.fahd.chatterLink.model.chat.ChatMessage;
 import com.fahd.chatterLink.service.ChatService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -35,12 +36,14 @@ public class ChatController {
         // save message
         chatService.saveMessage(chatMessage);
         // route message to /topic/message/{senderId}/{receiverId}
+        String destination = String.format("/topic/message/%s/%s", chatMessage.getSenderId(), chatMessage.getReceiverId());
+        messagingTemplate.convertAndSend(destination, chatMessage);
     }
 
     @GetMapping(GET_CHAT_PATH)
     public ResponseEntity<Object> getUserChat(
-            @PathVariable("senderId") String senderId,
-            @PathVariable("receiverId") String receiverId
+            @Param("senderId") String senderId,
+            @Param("receiverId") String receiverId
     ) {
         try {
             Optional<ChatList> chatList = chatService.getChatByUserId(senderId, receiverId);

@@ -2,8 +2,10 @@ import React from 'react'
 import './Chat.css'
 import SenderComp from './SenderComp'
 import ChatComp from './ChatComp'
+import { useAuth } from '../context/AuthContext'
 
-function Chatbox({ selectedUser }) {
+function Chatbox({ chatData, selectedUser, sendMessageToUser }) {
+  const {currentUser} = useAuth();
   const noChatsSelectedStyle = {
     hieght: '100%',
     width: '100%',
@@ -11,6 +13,19 @@ function Chatbox({ selectedUser }) {
     justifyContent: 'center',
     alignItems: 'center'
   }
+
+  const handleSendClick = (messageContent) => {
+    //console.log(messageContent)
+    const messagePayload = {
+      senderId: currentUser.userId,
+      receiverId: selectedUser.userId,
+      content: messageContent
+    }
+
+    //console.log(messagePayload)
+    sendMessageToUser(messagePayload)
+  }
+
   return (
     <div className='chat-box'>
       {
@@ -20,8 +35,12 @@ function Chatbox({ selectedUser }) {
           </div>
         )  : (
           <>
-          <ChatComp />
-          <SenderComp />
+          <ChatComp
+            chatMessages={chatData.chatMessages}
+           />
+          <SenderComp 
+            handleSendClick={handleSendClick}
+           />
           </>
         )
       }

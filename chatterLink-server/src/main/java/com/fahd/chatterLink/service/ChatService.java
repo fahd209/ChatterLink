@@ -19,23 +19,23 @@ public class ChatService {
     }
 
     /*
-    * getting the users chat
-    * checking if it exists if not then make a new chat and save the current message
-    * ELSE get the current chat and add the current message to the map
-    */
+     * getting the users chat
+     * checking if it exists if not then make a new chat and save the current message
+     * ELSE get the current chat and add the current message to the map
+     */
     public void saveMessage(ChatMessage chatMessage) {
         List<String> userIdList = List.of(chatMessage.getSenderId(), chatMessage.getReceiverId());
         Optional<ChatList> chatList = chatRepository.findChatBetweenUser(userIdList);
         if (chatList.isEmpty()) {
             ChatList newChatList = ChatList.builder()
                     .userIdList(userIdList)
-                    .chat(Map.of(chatMessage.getSenderId(), chatMessage.getContent()))
+                    .chatMessages(List.of(chatMessage))
                     .build();
             chatRepository.save(newChatList);
         } else {
             chatList.get()
-                    .getChat()
-                    .put(chatMessage.getSenderId(), chatMessage.getContent());
+                    .getChatMessages()
+                    .add(chatMessage);
             chatRepository.save(chatList.get());
         }
     }

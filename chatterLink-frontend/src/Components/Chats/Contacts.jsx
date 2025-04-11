@@ -41,7 +41,7 @@ function Contacts({ onUserClick }) {
           setContactList(res.data.contactList)
         })
         .catch(error => {
-          console.log(error.toJSON())
+          //console.log(error.toJSON())
         })
       setTargetUserContact('')
     }
@@ -59,7 +59,7 @@ function Contacts({ onUserClick }) {
           setContactList(res.data.contactList)
         })
         .catch(err => {
-          console.log(err)
+         // console.log(err)
         })
     }
     fetchUserContactList()

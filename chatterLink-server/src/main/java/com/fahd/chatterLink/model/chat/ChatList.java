@@ -18,5 +18,5 @@ public class ChatList {
     @MongoId(FieldType.OBJECT_ID)
     String mongoId;
     List<String> userIdList;
-    Map<String, String> chat;
+    List<ChatMessage> chatMessages;
 }

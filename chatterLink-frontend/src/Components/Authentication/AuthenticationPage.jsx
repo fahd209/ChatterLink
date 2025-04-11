@@ -60,7 +60,7 @@ function AuthenticationPage() {
     const url = `${baseUrl}/api/v1/auth/authenticate`
     axios.post(url, signInPayload)
     .then((res) => {
-      console.log(res.data)
+      //console.log(res.data)
 
       const loggedInUser = {
         username: res.data.email,
@@ -77,7 +77,7 @@ function AuthenticationPage() {
       })
     })
     .catch(err => {
-      console.log(err)
+      //console.log(err)
     })
   }
 
@@ -116,7 +116,7 @@ function AuthenticationPage() {
       })
     })
     .catch((error) => {
-      console.log(error)
+      //console.log(error)
     })
   }
 
