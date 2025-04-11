@@ -1,8 +1,8 @@
 package com.fahd.chatterLink.controller;
 
-import com.fahd.chatterLink.model.AuthRequest;
-import com.fahd.chatterLink.model.AuthResponse;
-import com.fahd.chatterLink.model.RegisterRequest;
+import com.fahd.chatterLink.model.Authentication.AuthRequest;
+import com.fahd.chatterLink.model.Authentication.AuthResponse;
+import com.fahd.chatterLink.model.Authentication.RegisterRequest;
 import com.fahd.chatterLink.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

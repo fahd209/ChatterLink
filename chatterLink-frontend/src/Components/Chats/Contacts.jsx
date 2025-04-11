@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Chat.css'
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton } from '@mui/material';
@@ -6,14 +6,69 @@ import Tooltip from '@mui/material/Tooltip';
 import TextField from '@mui/material/TextField';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ContactComp from './ContactComp';
+import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
+import baseUrl from '../config/baseUrl'
+import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
-function Contacts() {
+function Contacts({ onUserClick }) {
 
-  const handleClick = () => {
-    console.log("Clicked")
+  const { currentUser } = useAuth()
+  const [targetUserContact, setTargetUserContact] = useState('');
+  const [contactList, setContactList] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState(null)
+
+  const handleContactTextFieldChange = (e) => {
+    const value = e.target.value;
+    setTargetUserContact(value)
   }
 
-  const names = ["User", "User", "User", "User", "User", "User", "User", "User", "User"]
+  const handleClick = () => {
+    if (targetUserContact !== '') {
+      const addContactPayload = {
+        userId: currentUser.userId,
+        targetUserContact: targetUserContact
+      }
+      const url = baseUrl + '/api/v1/contacts/add';
+      axios.post(url,
+        addContactPayload,
+        {
+          headers: {
+            "Authorization": `Bearer ${currentUser.token}`,
+          }
+        })
+        .then(res => {
+          setContactList(res.data.contactList)
+        })
+        .catch(error => {
+          //console.log(error.toJSON())
+        })
+      setTargetUserContact('')
+    }
+  }
+
+  useEffect(() => {
+    const fetchUserContactList = () => {
+      const url = baseUrl + `/api/v1/contacts/get?userId=${currentUser.userId}`;
+      axios.get(url, {
+        headers: {
+          "Authorization": `Bearer ${currentUser.token}`
+        }
+      })
+        .then(res => {
+          setContactList(res.data.contactList)
+        })
+        .catch(err => {
+         // console.log(err)
+        })
+    }
+    fetchUserContactList()
+  }, [])
+
+  const handleContactClick = (username, index, userId) => {
+    setSelectedIndex(index)
+    onUserClick(username, userId)
+  }
 
   return (
     <div className='contacts-column'>
@@ -23,9 +78,12 @@ function Contacts() {
         padding: '10px',
         borderBottom: '1px solid black'
       }}>
-        <TextField id="standard-basic" label="Add Contact" variant="standard" id="standard-basic"
+        <TextField
+          id="standard-basic"
           label="Add Contact"
           variant="standard"
+          value={targetUserContact}
+          onChange={handleContactTextFieldChange}
           sx={{
             "& label": { color: "white" },  // Label color
             "& .MuiInput-underline:before": { borderBottomColor: "white" },  // Bottom border before click
@@ -46,11 +104,21 @@ function Contacts() {
       </div>
       <div className='contacts-container'>
         {
-          names.map((user, index) => (
-            <ContactComp
-              username={user}
-             /> 
-          ))
+          contactList?.length > 0 ? (
+            contactList.map((contact, index) => (
+              <ContactComp
+                index={index}
+                onContactClick={handleContactClick}
+                username={contact.username}
+                userId={contact.userId}
+                selectedIndex={selectedIndex}
+              />))
+
+            ) : (
+              <div className='not-contacts-container'>
+                <p>No contacts found</p>
+              </div>
+            )
         }
       </div>
     </div>

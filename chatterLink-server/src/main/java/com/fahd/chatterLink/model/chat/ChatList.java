@@ -1,4 +1,4 @@
-package com.fahd.chatterLink.model;
+package com.fahd.chatterLink.model.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,16 +7,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Data
-@Builder
+import java.util.List;
+import java.util.Map;
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthResponse {
-
+@Builder
+@Data
+public class ChatList {
     @MongoId(FieldType.OBJECT_ID)
-    private String userId;
-
-    private String email;
-    private String accessToken;
-    private String message;
+    String mongoId;
+    List<String> userIdList;
+    List<ChatMessage> chatMessages;
 }

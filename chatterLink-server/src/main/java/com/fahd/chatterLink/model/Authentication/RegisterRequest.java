@@ -1,4 +1,4 @@
-package com.fahd.chatterLink.model;
+package com.fahd.chatterLink.model.Authentication;
 
 
 import lombok.Builder;

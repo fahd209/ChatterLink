@@ -1,6 +1,9 @@
 package com.fahd.chatterLink.service;
 
 import com.fahd.chatterLink.model.*;
+import com.fahd.chatterLink.model.Authentication.AuthRequest;
+import com.fahd.chatterLink.model.Authentication.AuthResponse;
+import com.fahd.chatterLink.model.Authentication.RegisterRequest;
 import com.fahd.chatterLink.repository.UserRepository;
 import com.fahd.chatterLink.security.JwtService;
 import org.slf4j.Logger;

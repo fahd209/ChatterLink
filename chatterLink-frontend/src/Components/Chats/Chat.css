@@ -20,7 +20,10 @@
 
 .chat-box{
     width: 70vw;
-    background-color: #151129;
+    background-color: #221d37;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-container {
@@ -33,12 +36,10 @@
     align-items: center;
 }
 
-.contact-tab {
-    display: flex;
-    border-bottom: .5px solid rgba(255, 255, 255, 0.327);
-    padding: 10px;
-    align-items: center;
 
+.contact-tab:hover {
+    background-color: #221d37;
+    cursor: pointer;
 }
 
 .contact-tab > p {
@@ -47,4 +48,50 @@
     margin-left: 10px;
     display: table-cell;
     vertical-align: middle;
+}
+
+.not-contacts-container{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-contacts-container p {
+    color: white;
+}
+
+.chat-data-container {
+    height: 90%; /* or fixed like 500px if needed */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.send-message-container{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid white;
+}
+.messages-not-found{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.messages-not-found p {
+    margin-top: 50px;
+    color: white;
+}
+
+.chat-messages-data {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
