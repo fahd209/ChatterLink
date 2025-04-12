@@ -2,12 +2,12 @@ spring.application.name: blogIn
 
 server.port: 8081
 
-client.host: http://localhost:3000
+client.host: http://chatterlink.com/
 
 spring:
   data:
     mongodb:
-      host: localhost
+      host: host.minikube.internal
       port: 27017
       database: chatterlink
 
