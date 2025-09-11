@@ -2,16 +2,26 @@
 Welcome to chatter link - A daynmic and scalable chat application
 
 ## Overview
-This application demonstrates my practical knowlegde in full stack development and also devOps operations. This application is built to scale. The application doens't run on my local system, instead it runs in a kubernetes cluster that is ready to scale. For my messaging protocalls I'm using websocks to stream line messaging and reduce api calls to the backend for optimization. I also implemented the CI/CD pipeline leaverging argocd so that the code can sync with the kubernetes cluster when I push my code to the repository.
+This application demonstrates my practical expertise in full-stack development and DevOps practices, designed with scalability in mind. Instead of running locally, the application is deployed in a Kubernetes cluster, providing built-in scalability and reliability.
+
+For real-time communication, I implemented WebSockets, which streamline messaging and reduce unnecessary API calls to the back end, significantly optimizing performance.
+
+To enable seamless delivery, I set up a CI/CD pipeline leveraging ArgoCD, ensuring that every code push to the repository is automatically synchronized with the Kubernetes cluster for continuous deployment.
 
 ## Tech stack
-1. Spring boot for the backend
-2. React.JS for the frontend
-3. Websockets for dynamic messaging
-4. MongoDB for a flexible data store
-5. Github action to automatically build the docker image when I push code and update the helm charts in gitlab automatically
-6. GitLab for helm charts
-7. Finally argocd to moniter the kubernetes helm charts to sync deployment when code is changed
+1. Spring Boot – Backend framework for building scalable and secure REST APIs
+
+2. React.js – Frontend framework for creating dynamic and responsive user interfaces
+
+3. WebSockets – Real-time messaging to optimize communication and reduce API overhead
+
+4. MongoDB – Flexible NoSQL database for handling diverse and evolving data structures
+
+5. GitHub Actions – Automated CI pipeline to build Docker images and update Helm charts on every push
+
+6. GitLab – Repository for managing and storing Helm charts
+
+7. ArgoCD – Continuous delivery tool that monitors Helm charts and automatically syncs deployments in Kubernetes
 
 ## Chat application
 
